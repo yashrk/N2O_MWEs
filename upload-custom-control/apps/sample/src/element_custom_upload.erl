@@ -4,18 +4,17 @@
 -include("custom_upload.hrl").
 
 render_element(#custom_upload{id=Id} = U) ->
-    Uid = case Id of undefined -> wf:temp_id(); I -> I end,
     bind(ftp_open,  click,  "qi('upload').click(); e.preventDefault();"),
     bind(ftp_start, click,  "ftp.start();"),
     bind(ftp_stop,  click,  "ftp.stop();"),
-    bind(nitro:to_atom(Uid), change, "ftp.init(this.files[0],false);"),
+    bind(upload,   change, "ftp.init(this.files[0],false);"),
     Upload = #panel  { body = [
-             #input  { id   = Uid,         type    = <<"file">>, style = "display:none" },
-             #span   { id   = ftp_status,  body    = [] },
+             #input  { id   = upload,     type    = <<"file">>, style = "display:none" },
+             #span   { id   = ftp_status,  body    = [], style = "display:none" },
              #span   { body = [
              #button { id   = ftp_open,    body = "Browse" },
              #button { id   = ftp_start,   body = "Upload" },
-             #button { id   = ftp_stop,    body = "Stop" }
+             #button { id   = ftp_stop,    body = "Stop", style = "display:none" }
     ] } ] }, wf:render(Upload).
 
 bind(Control,Event,Code) ->
