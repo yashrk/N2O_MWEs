@@ -1,0 +1,1 @@
+-record(custom_upload, {?CTRL_BASE(element_custom_upload), name, value}).
