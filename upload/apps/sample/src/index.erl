@@ -10,6 +10,7 @@ body() ->
     [ #span{id=upload} ].
 
 event(init) ->
+    wf:reg(n2o_session:session_id()),
     wf:update(upload,#upload{id=upload});
 
 event(Event) ->
